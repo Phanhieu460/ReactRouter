@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Prompt } from "react-router-dom";
+import { Prompt, Redirect } from "react-router-dom";
 
 class Login extends Component {
   constructor(props) {
@@ -8,6 +8,7 @@ class Login extends Component {
       email: "",
       password: "",
       isBlocking: false,
+      isRedirect: false,
     };
   }
   handleChange = (event) => {
@@ -17,10 +18,41 @@ class Login extends Component {
     });
   };
   handleSubmit = (e) => {
-    alert("Email:" + this.state.email);
+    var user = JSON.parse(localStorage.getItem("user"));
+    if (
+      user.email === this.state.email &&
+      user.password === this.state.password
+    ) {
+      var user_login = {
+        email: this.state.email,
+        password: this.state.password,
+      };
+      var user_json = JSON.stringify(user_login);
+      localStorage.setItem("user_login", user_json);
+      this.setState({
+        isRedirect: true,
+      });
+    }
     e.preventDefault();
   };
   render() {
+    if (this.state.isRedirect) {
+      return <Redirect to="/accountManagement" />;
+    }
+    var user_login = JSON.parse(localStorage.getItem("user_login"));
+    if (user_login) {
+      const location = this.props.location;
+      return (
+        <Redirect
+          to={{
+            pathname: "/accountManagement",
+            state: {
+              from: location,
+            },
+          }}
+        />
+      );
+    }
     return (
       <div className="container">
         <Prompt

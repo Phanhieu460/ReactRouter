@@ -20,7 +20,14 @@ class SignUp extends Component {
     });
   };
   hanldeSubmit = (e) => {
-    alert("Fullname: " + this.state.fullname);
+    var user = {
+      email: this.state.email,
+      password: this.state.password,
+      confirm_password: this.state.confirm_password,
+      birthday: this.state.birthday,
+    };
+    var user_json = JSON.stringify(user);
+    localStorage.setItem("user", user_json);
     e.preventDefault();
   };
   render() {

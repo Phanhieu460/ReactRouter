@@ -7,6 +7,7 @@ import SignUp from "./Components/SignUp";
 import AccountManagement from "./Components/AccountManagement";
 import DepartmentManagement from "./Components/DepartmentManagement";
 import Error_1 from "./Components/Error_1";
+import AccountDetail from "./Components/AccountDetail";
 
 function App() {
   return (
@@ -110,6 +111,7 @@ function App() {
           component={DepartmentManagement}
           exact
         ></Route>
+        <Route path="/accountManagement/:ID" component={AccountDetail} exact />
         <Route component={Error_1}></Route>
       </Switch>
     </div>
